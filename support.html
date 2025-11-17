@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Support | AK Solutions</title>
+    <meta name="description" content="Technical Support for AK Solutions – get help via WhatsApp, email, and priority SLA plans.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .support-page {
+            max-width: 1000px;
+            margin: 120px auto 80px;
+            padding: 0 20px;
+        }
+        
+        .support-header {
+            margin-bottom: 2rem;
+        }
+        
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+        
+        .support-card {
+            background: var(--background-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        
+        .support-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .support-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        .support-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .support-actions a {
+            text-decoration: none;
+        }
+        
+        .sla {
+            margin-top: 2rem;
+        }
+        
+        .sla ul {
+            padding-left: 1.2rem;
+            color: var(--text-secondary);
+        }
+        
+        .backlink {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            margin-top: 1.5rem;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .backlink:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><a href="/index.html">AK Solutions</a></h2>
+            </div>
+        </div>
+    </nav>
+    <main class="support-page" id="main-content">
+        <div class="support-header">
+            <h1>Technical Support</h1>
+            <p class="faq-intro">Need help? Reach us via WhatsApp or Email, or choose a support plan.</p>
+        </div>
+
+        <div class="support-grid">
+            <div class="support-card">
+                <h3>WhatsApp Support</h3>
+                <p>Fastest response for quick questions and urgent issues during business hours.</p>
+                <div class="support-actions">
+                    <a class="btn btn-secondary btn-outline-glow" href="https://wa.me/91XXXXXXXXXX" aria-label="Chat on WhatsApp">Chat on WhatsApp</a>
+                </div>
+            </div>
+            <div class="support-card">
+                <h3>Email Support</h3>
+                <p>For detailed requests, send us an email with screenshots and links.</p>
+                <div class="support-actions">
+                    <a class="btn btn-secondary btn-outline-glow" href="mailto:aksolutionsgroups@gmail.com" aria-label="Email support">Email Support</a>
+                </div>
+            </div>
+            <div class="support-card">
+                <h3>Priority SLA Plans</h3>
+                <p>Get guaranteed response and resolution times with monthly support retainers.</p>
+                <div class="sla">
+                    <ul>
+                        <li>Standard: response within 8 hours, next-business-day fixes</li>
+                        <li>Priority: response within 2 hours, same-day fixes</li>
+                        <li>Emergency: 24/7 on-call, critical issue resolution within 4 hours</li>
+                    </ul>
+                </div>
+                <div class="support-actions">
+                    <a class="btn btn-primary" href="#contact" aria-label="Request a support plan">Request a Plan</a>
+                </div>
+            </div>
+        </div>
+
+        <a class="backlink" href="/index.html">← Back to Home</a>
+    </main>
+</body>
+
+</html>

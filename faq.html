@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | AK Solutions</title>
+    <meta name="description" content="Frequently Asked Questions about AK Solutions services, pricing, timelines, and support.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .faq-page {
+            max-width: 900px;
+            margin: 120px auto 80px;
+            padding: 0 20px;
+        }
+        
+        .faq-page h1 {
+            font-size: clamp(2rem, 4vw, 2.6rem);
+            margin-bottom: 1rem;
+        }
+        
+        .faq-intro {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .accordion {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .faq-item+.faq-item {
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .faq-q {
+            width: 100%;
+            text-align: left;
+            background: var(--background-card);
+            color: var(--text-color);
+            padding: 1rem 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-a {
+            background: var(--background-dark);
+            color: var(--text-secondary);
+            padding: 1rem 1.25rem;
+            display: none;
+            line-height: 1.75;
+        }
+        
+        .faq-q:focus {
+            outline: 3px solid rgba(255, 215, 0, 0.3);
+            outline-offset: 2px;
+        }
+        
+        .faq-q .icon {
+            transition: transform 0.2s ease;
+        }
+        
+        .faq-item.open .faq-a {
+            display: block;
+        }
+        
+        .faq-item.open .faq-q .icon {
+            transform: rotate(180deg);
+        }
+        
+        .backlink {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            margin-top: 1rem;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .backlink:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><a href="/index.html">AK Solutions</a></h2>
+            </div>
+        </div>
+    </nav>
+    <main class="faq-page" id="main-content">
+        <h1>Frequently Asked Questions</h1>
+        <p class="faq-intro">Quick answers about timelines, pricing, process, and support.</p>
+
+        <div class="accordion" id="faq-accordion">
+            <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">How fast can you deliver a website? <span class="icon">▾</span></button>
+                <div class="faq-a">Most brochure sites are delivered in 7–14 days. Complex apps vary based on scope; we share a timeline with milestones up front.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">What tech stack do you use? <span class="icon">▾</span></button>
+                <div class="faq-a">We build with modern stacks like React, Node.js, Express, MongoDB, and integrate services such as Stripe, AWS, and Firebase as needed.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">Do you provide SEO and mobile optimization? <span class="icon">▾</span></button>
+                <div class="faq-a">Yes. Every project includes mobile-first responsive design, core web vitals optimizations, and basic on-page SEO.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">What are your payment terms? <span class="icon">▾</span></button>
+                <div class="faq-a">Typically an upfront milestone to start, then payment on agreed checkpoints. Details are defined in the proposal.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">Do you offer post-launch support? <span class="icon">▾</span></button>
+                <div class="faq-a">We provide 30 days of complimentary support after launch, with optional maintenance plans for ongoing updates.</div>
+            </div>
+        </div>
+
+        <a class="backlink" href="/index.html">← Back to Home</a>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.faq-item');
+            items.forEach(item => {
+                const btn = item.querySelector('.faq-q');
+                btn.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('open');
+                    items.forEach(i => {
+                        i.classList.remove('open');
+                        i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+                    });
+                    if (!isOpen) {
+                        item.classList.add('open');
+                        btn.setAttribute('aria-expanded', 'true');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

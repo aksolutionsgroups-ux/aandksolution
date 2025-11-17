@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A&K Solutions – Professional Web Development Services in India | React, Node.js, E-commerce</title>
+
+    <meta name="description" content="Transform your business with custom web development from A&K Solutions. Professional websites, React apps, e-commerce stores, and digital solutions. Fast delivery in 7-14 days. Get your free quote today!">
+    <meta name="keywords" content="web development India, custom website design, React development, Node.js applications, e-commerce solutions, affordable web design, professional web developer, website maintenance, SEO optimization, mobile responsive design">
+    <meta name="author" content="A&K Solutions">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Open Graph (Facebook, LinkedIn) -->
+    <meta property="og:title" content="A&K Solutions – Professional Web Development Services in India">
+    <meta property="og:description" content="Transform your business with custom web development. Professional websites, React apps, e-commerce stores. Fast delivery in 7-14 days. Get your free quote today!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aksolutionsgroups.com">
+    <meta property="og:image" content="https://aksolutionsgroups.com/og-image.jpg">
+    <meta property="og:site_name" content="A&K Solutions">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="A&K Solutions – Professional Web Development Services">
+    <meta name="twitter:description" content="Transform your business with custom web development. Professional websites, React apps, e-commerce stores. Fast delivery in 7-14 days.">
+    <meta name="twitter:image" content="https://aksolutions.com/twitter-image.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://aksolutions.com">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32"
+    href="https://images.unsplash.com/photo-1761126666486-85351a3d8c15?ixlib=rb-4.1.0&auto=format&fit=crop&q=100&w=32">
+
+    <link rel="icon" type="image/png" sizes="512x512"
+    href="https://images.unsplash.com/photo-1761126666486-85351a3d8c15?ixlib=rb-4.1.0&auto=format&fit=crop&q=100&w=512">
+
+    <link rel="apple-touch-icon" sizes="180x180"
+    href="https://images.unsplash.com/photo-1761126666486-85351a3d8c15?ixlib=rb-4.1.0&auto=format&fit=crop&q=100&w=180">
+
+    <!-- Preconnect (performance optimization) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        as="style">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Loading indicator -->
+    <div id="loading" class="loading">
+        <div class="loading-spinner"></div>
+        <p>Loading A&K Solutions...</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><a href="#home" aria-label="A&K Solutions Home">A&K Solutions</a></h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link" role="menuitem">Home</a></li>
+                <li><a href="#services" class="nav-link" role="menuitem">Services</a></li>
+                <li><a href="#portfolio" class="nav-link" role="menuitem">Portfolio</a></li>
+                <li><a href="#contact" class="nav-link" role="menuitem">Contact</a></li>
+            </ul>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+                <span class="bar" aria-hidden="true"></span>
+                <span class="bar" aria-hidden="true"></span>
+                <span class="bar" aria-hidden="true"></span>
+            </button>
+            <!-- Day/Night Toggle Button -->
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark mode">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-background">
+                <div class="hero-particles"></div>
+                <div class="hero-grid"></div>
+                <div class="hero-gradient"></div>
+            </div>
+
+            <!-- Brand Marquee for social proof -->
+            <div class="brand-marquee" aria-hidden="true">
+                <div class="marquee-track">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/react.svg" alt="React" />
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/nodedotjs.svg" alt="Node.js" />
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/amazonaws.svg" alt="AWS" />
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/stripe.svg" alt="Stripe" />
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/mongodb.svg" alt="MongoDB" />
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vercel.svg" alt="Vercel" />
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/firebase.svg" alt="Firebase" />
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/cloudflare.svg" alt="Cloudflare" />
+                </div>
+            </div>
+
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="title-line">
+                            <span class="title-word">We</span>
+                            <span class="title-word">Code.</span>
+                        </span>
+                        <span class="title-line">
+                            <span class="title-word">You</span>
+                            <span class="title-word">Grow.</span>
+                        </span>
+                        <div class="title-accent">
+                            <span class="accent-text">A&K Solutions</span>
+                            <span class="accent-subtitle">– Your Digital Partner</span>
+                        </div>
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        Transform your business with <span class="highlight">affordable, custom-built websites</span> delivered with exceptional quality and unmatched speed. Professional web development services that drive <span class="highlight">real results</span>.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary btn-glow" aria-label="Get a free quote for your project">
+                            <span class="btn-text">Get a Free Quote</span>
+                            <span class="btn-icon">→</span>
+                        </a>
+                        <a href="#portfolio" class="btn btn-secondary btn-outline-glow" aria-label="View our portfolio of work">
+                            <span class="btn-text">View Our Work</span>
+                            <span class="btn-icon">👁️</span>
+                        </a>
+                    </div>
+
+                    <div class="hero-visual" aria-hidden="true">
+                        <div class="code-window">
+                            <div class="window-header">
+                                <div class="window-controls">
+                                    <span class="control red"></span>
+                                    <span class="control yellow"></span>
+                                    <span class="control green"></span>
+                                </div>
+                                <div class="window-title">A&K Solutions - Professional Web Development</div>
+                            </div>
+                            <div class="code-content">
+                                <div class="code-line typing-line">
+                                    <span class="line-number">1</span>
+                                    <span class="keyword">const</span> <span class="variable">website</span> = <span class="string">'A&K Solutions'</span>;
+                                </div>
+                                <div class="code-line typing-line">
+                                    <span class="line-number">2</span>
+                                    <span class="keyword">const</span> <span class="variable">quality</span> = <span class="string">'Exceptional'</span>;
+                                </div>
+                                <div class="code-line typing-line">
+                                    <span class="line-number">3</span>
+                                    <span class="keyword">const</span> <span class="variable">delivery</span> = <span class="string">'7-14 days'</span>;
+                                </div>
+                                <div class="code-line typing-line">
+                                    <span class="line-number">4</span>
+                                    <span class="keyword">const</span> <span class="variable">success</span> = <span class="string">'Guaranteed'</span>;
+                                </div>
+                                <div class="code-line typing-line">
+                                    <span class="line-number">5</span>
+                                    <span class="comment">// Ready to transform your business?</span>
+                                </div>
+                                <div class="code-line typing-line">
+                                    <span class="line-number">6</span>
+                                    <span class="keyword">await</span> <span class="function">startProject</span>();
+                                </div>
+                                <div class="cursor"></div>
+                            </div>
+                        </div>
+
+                        <div class="floating-elements">
+                            <div class="floating-card" data-aos="fade-up" data-aos-delay="400">
+                                <div class="card-icon">🎨</div>
+                                <div class="card-text">Modern Design</div>
+                            </div>
+                            <div class="floating-card" data-aos="fade-up" data-aos-delay="600">
+                                <div class="card-icon">⚡</div>
+                                <div class="card-text">Fast Performance</div>
+                            </div>
+                            <div class="floating-card" data-aos="fade-up" data-aos-delay="800">
+                                <div class="card-icon">📱</div>
+                                <div class="card-text">Mobile Responsive</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section id="why-us" class="why-us">
+            <div class="container">
+                <h2 class="section-title">Why Choose A&K Solutions?</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon" aria-hidden="true">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Rapid Delivery</h3>
+                        <p>Websites delivered in just 7–14 days – launch fast and start growing your business immediately!</p>
+                    </div>
+                    <div class="benefit-card" >
+                        <div class="benefit-icon" aria-hidden="true">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Transparent Pricing</h3>
+                        <p>No hidden fees, clear project costs from day one. Know exactly what you're paying for.</p>
+                    </div>
+                    <div class="benefit-card" >
+                        <div class="benefit-icon" aria-hidden="true">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>SEO & Mobile First</h3>
+                        <p>Optimized for search engines and flawless on all devices. Rank higher and reach more customers.</p>
+                    </div>
+                    <div class="benefit-card" >
+                        <div class="benefit-icon" aria-hidden="true">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Dedicated Support</h3>
+                        <p>Comprehensive post-launch support & ongoing maintenance. We're here for you 24/7.</p>
+                    </div>
+                    <div class="benefit-card" >
+                        <div class="benefit-icon" aria-hidden="true">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Custom Solutions</h3>
+                        <p>Tailored development for unique business needs. Your vision, our expertise.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <div class="container">
+                <h2 class="section-title">Our Expertise</h2>
+                <div class="services-grid">
+                    <div class="service-card" >
+                        <div class="service-icon" aria-hidden="true">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Static Websites</h3>
+                        <p>High-performance, secure, SEO-friendly brochure sites that convert visitors into customers.</p>
+                        <ul class="service-features">
+                            <li>Lightning-fast loading</li>
+                            <li>SEO optimized</li>
+                            <li>Mobile responsive</li>
+                            <li>Contact forms</li>
+                        </ul>
+                    </div>
+                    <div class="service-card" >
+                        <div class="service-icon" aria-hidden="true">
+                            <i class="fab fa-react"></i>
+                        </div>
+                        <h3>Dynamic React & Node.js Applications</h3>
+                        <p>Interactive, scalable web apps with modern technology stack for complex business needs.</p>
+                        <ul class="service-features">
+                            <li>React frontend</li>
+                            <li>Node.js backend</li>
+                            <li>Real-time features</li>
+                            <li>API integration</li>
+                        </ul>
+                    </div>
+                    <div class="service-card" >
+                        <div class="service-icon" aria-hidden="true">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h3>E-commerce Solutions</h3>
+                        <p>Robust online stores for secure, efficient sales with advanced inventory management.</p>
+                        <ul class="service-features">
+                            <li>Payment processing</li>
+                            <li>Inventory management</li>
+                            <li>Order tracking</li>
+                            <li>Customer accounts</li>
+                        </ul>
+                    </div>
+                    <div class="service-card" >
+                        <div class="service-icon" aria-hidden="true">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>Hosting & Domain Setup</h3>
+                        <p>Hassle-free setup and configuration with reliable hosting and domain management.</p>
+                        <ul class="service-features">
+                            <li>SSL certificates</li>
+                            <li>Domain registration</li>
+                            <li>Hosting setup</li>
+                            <li>Email configuration</li>
+                        </ul>
+                    </div>
+                    <div class="service-card" >
+                        <div class="service-icon" aria-hidden="true">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>Website Maintenance & Updates</h3>
+                        <p>Ongoing support for security, speed, and performance optimization.</p>
+                        <ul class="service-features">
+                            <li>Security updates</li>
+                            <li>Performance optimization</li>
+                            <li>Content updates</li>
+                            <li>Backup management</li>
+                        </ul>
+                    </div>
+                    <div class="service-card" >
+                        <div class="service-icon" aria-hidden="true">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Custom API Development</h3>
+                        <p>Integrate third-party services and build bespoke backends for your specific needs.</p>
+                        <ul class="service-features">
+                            <li>RESTful APIs</li>
+                            <li>Third-party integration</li>
+                            <li>Database design</li>
+                            <li>API documentation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="portfolio">
+            <div class="container">
+                <h2 class="section-title">Our Recent Projects</h2>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item" data-project="cafe" aria-label="View Modern Café Website project">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Modern Café Website - Elegant design with online ordering system" loading="lazy">
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h3>Modern Café Website</h3>
+                            <p>Elegant design with online ordering system</p>
+                            <button type="button" class="btn btn-sm" onclick="openProject('cafe')" aria-label="View details of Modern Café Website project">View Details</button>
+                        </div>
+                    </div>
+                    <div class="portfolio-item" data-project="coaching"   aria-label="View Coaching Institute Platform project">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Online Coaching Institute Platform - Learning management system with student portal" loading="lazy">
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h3>Coaching Institute Platform</h3>
+                            <p>Learning management system with student portal</p>
+                            <button type="button" class="btn btn-sm" onclick="openProject('coaching')" aria-label="View details of Coaching Institute Platform project">View Details</button>
+                        </div>
+                    </div>
+                    <div class="portfolio-item" data-project="mobile"   aria-label="View Mobile App Landing Page project">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Mobile App Landing Page - High-converting landing page for mobile app" loading="lazy">
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h3>Mobile App Landing Page</h3>
+                            <p>High-converting landing page for mobile app</p>
+                            <button type="button" class="btn btn-sm" onclick="openProject('mobile')" aria-label="View details of Mobile App Landing Page project">View Details</button>
+                        </div>
+                    </div>
+                    <div class="portfolio-item" data-project="artisan"   aria-label="View Artisan E-commerce Store project">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Local Artisan E-commerce Store - Beautiful online store for local artisans" loading="lazy">
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h3>Artisan E-commerce Store</h3>
+                            <p>Beautiful online store for local artisans</p>
+                            <button type="button" class="btn btn-sm" onclick="openProject('artisan')" aria-label="View details of Artisan E-commerce Store project">View Details</button>
+                        </div>
+                    </div>
+                    <div class="portfolio-item" data-project="service"   aria-label="View Service Business Lead Gen project">
+                        <div class="portfolio-image">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Service-Based Business Lead Gen Site - Lead generation website for service business" loading="lazy">
+                        </div>
+                        <div class="portfolio-overlay">
+                            <h3>Service Business Lead Gen</h3>
+                            <p>Lead generation website for service business</p>
+                            <button type="button" class="btn btn-sm" onclick="openProject('service')" aria-label="View details of Service Business Lead Gen project">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials" aria-label="Client testimonials">
+            <div class="container">
+                <h2 class="section-title">What Our Clients Say</h2>
+                <div class="testimonial-slider"  aria-label="Testimonials">
+                    <div class="testimonial active"  aria-label="Testimonial 1 of 3">
+                        <div class="testimonial-content">
+                            <blockquote>
+                                <p>"A&K Solutions delivered a stunning website faster than we expected! The team was professional, responsive, and truly understood our business needs. Highly recommend for their quality and reliability."</p>
+                            </blockquote>
+                            <div class="testimonial-author">
+                                <h4>Rahul Sharma</h4>
+                                <span>Restaurant Owner, Mumbai</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial"  aria-label="Testimonial 2 of 3">
+                        <div class="testimonial-content">
+                            <blockquote>
+                                <p>"The team at A&K Solutions truly understood our needs. Our new e-commerce site looks great and performs even better! Sales increased by 40% in the first month."</p>
+                            </blockquote>
+                            <div class="testimonial-author">
+                                <h4>Priya Patel</h4>
+                                <span>Fashion Boutique Owner, Delhi</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial"  aria-label="Testimonial 3 of 3">
+                        <div class="testimonial-content">
+                            <blockquote>
+                                <p>"Affordable pricing with premium quality. A&K Solutions helped us establish our online presence perfectly. The ongoing support has been exceptional."</p>
+                            </blockquote>
+                            <div class="testimonial-author">
+                                <h4>Arjun Kumar</h4>
+                                <span>Startup Founder, Bangalore</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-dots" role="tablist" aria-label="Testimonial navigation">
+                    <button class="dot active" role="tab" aria-selected="true" aria-label="Go to testimonial 1" onclick="currentSlide(1)"></button>
+                    <button class="dot" role="tab" aria-selected="false" aria-label="Go to testimonial 2" onclick="currentSlide(2)"></button>
+                    <button class="dot" role="tab" aria-selected="false" aria-label="Go to testimonial 3" onclick="currentSlide(3)"></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">Get Your Free Quote Today!</h2>
+                <div class="contact-content">
+                    <div class="contact-form">
+                        <form id="quoteForm" onsubmit="submitForm(event)" novalidate>
+                            <div class="form-group">
+                                <label for="name" class="visually-hidden">Full Name</label>
+                                <input type="text" id="name" name="name" placeholder="Full Name" required aria-describedby="name-error">
+                                <div id="name-error" class="error-message" role="alert" aria-live="polite"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="visually-hidden">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="Email Address" required aria-describedby="email-error">
+                                <div id="email-error" class="error-message" role="alert" aria-live="polite"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="whatsapp" class="visually-hidden">WhatsApp Number</label>
+                                <input type="tel" id="whatsapp" name="whatsapp" placeholder="WhatsApp Number (optional)" pattern="[0-9+\-\s()]*" aria-describedby="whatsapp-error">
+                                <div id="whatsapp-error" class="error-message" role="alert" aria-live="polite"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="businessType" class="visually-hidden">Business Type</label>
+                                <select id="businessType" name="businessType" required aria-describedby="businessType-error">
+                                    <option value="">Select Business Type</option>
+                                    <option value="restaurant">Restaurant & Food</option>
+                                    <option value="retail">Retail & E-commerce</option>
+                                    <option value="service">Service Business</option>
+                                    <option value="education">Education & Training</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <div id="businessType-error" class="error-message" role="alert" aria-live="polite"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="websiteType" class="visually-hidden">Website Type</label>
+                                <select id="websiteType" name="websiteType" required aria-describedby="websiteType-error">
+                                    <option value="">Select Website Type</option>
+                                    <option value="static">Static Website</option>
+                                    <option value="dynamic">Dynamic Web Application</option>
+                                    <option value="ecommerce">E-commerce Store</option>
+                                    <option value="custom">Custom Solution</option>
+                                </select>
+                                <div id="websiteType-error" class="error-message" role="alert" aria-live="polite"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="budget" class="visually-hidden">Budget Range</label>
+                                <select id="budget" name="budget" required aria-describedby="budget-error">
+                                    <option value="">Select Budget Range</option>
+                                    <option value="5k-10k">₹5,000 - ₹10,000</option>
+                                    <option value="10k-20k">₹10,000 - ₹20,000</option>
+                                    <option value="20k-50k">₹20,000 - ₹50,000</option>
+                                    <option value="50k+">₹50,000+</option>
+                                </select>
+                                <div id="budget-error" class="error-message" role="alert" aria-live="polite"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="visually-hidden">Project Description</label>
+                                <textarea id="message" name="message" placeholder="Tell us about your project..." rows="4" required aria-describedby="message-error"></textarea>
+                                <div id="message-error" class="error-message" role="alert" aria-live="polite"></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full">Get Free Quote</button>
+                        </form>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                            <div>
+                                <h4>WhatsApp</h4>
+                                <p><a href="https://wa.me/917036056631" aria-label="Contact us on WhatsApp">+91-XXXXXXX631</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="mailto:info@aksolutions.com" aria-label="Send us an email">aksolutionsgroups@gmail.com</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock" aria-hidden="true"></i>
+                            <div>
+                                <h4>Response Time</h4>
+                                <p>Within 2 hours</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            <div>
+                                <h4>Location</h4>
+                                <p>India (Remote Services)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>A&K Solutions</h3>
+                    <p>Your trusted partner for professional web development solutions. We build websites that grow your business and drive real results.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" aria-label="Connect with us on LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://wa.me/917036056631" class="social-link" aria-label="Contact us on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#home">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                        <li><a href="refund-policy.html">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="support.html">Technical Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 A&K Solutions. All rights reserved. | Made with ❤️ in India</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal"  aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-content">
+            <button class="close" aria-label="Close modal">&times;</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="notification" role="alert" aria-live="polite" aria-hidden="true">
+        <div class="notification-content">
+            <span id="notification-message"></span>
+            <button class="notification-close" aria-label="Close notification">&times;</button>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/917036056631?text=Hello%20aksolution,%20I%20would%20like%20to%20know%20more%20about%20your%20services" target="_blank" rel="noopener" class="whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+            <span class="whatsapp-tooltip">A&K Solutions</span>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{
+    "name": "ak-solutions-website",
+    "version": "1.0.0",
+    "description": "Professional web development services website for AK Solutions - Custom websites, React apps, and e-commerce solutions in India",
+    "main": "index.html",
+    "scripts": {
+        "start": "http-server -p 8000 -o",
+        "dev": "live-server --port=8000 --open=/",
+        "build": "npm run minify-css && npm run minify-js",
+        "minify-css": "cleancss -o styles.min.css styles.css",
+        "minify-js": "terser script.js -o script.min.js --compress --mangle",
+        "optimize-images": "imagemin assets/images/* --out-dir=assets/images/optimized",
+        "validate-html": "html-validate index.html",
+        "lighthouse": "lighthouse http://localhost:8000 --output=html --output-path=./lighthouse-report.html",
+        "test": "npm run validate-html && npm run lighthouse"
+    },
+    "keywords": [
+        "web-development",
+        "website-design",
+        "react-development",
+        "ecommerce",
+        "nodejs",
+        "responsive-design",
+        "seo-optimized",
+        "professional-website",
+        "india",
+        "hyderabad"
+    ],
+    "author": {
+        "name": "AK Solutions",
+        "email": "info@aksolutions.com",
+        "url": "https://aksolutions.com"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yourusername/ak-solutions-website.git"
+    },
+    "bugs": {
+        "url": "https://github.com/yourusername/ak-solutions-website/issues"
+    },
+    "homepage": "https://aksolutions.com",
+    "devDependencies": {
+        "clean-css-cli": "^5.6.0",
+        "terser": "^5.19.2",
+        "http-server": "^14.1.1",
+        "live-server": "^1.2.2",
+        "html-validate": "^8.8.0",
+        "lighthouse": "^11.4.0",
+        "imagemin-cli": "^7.0.0",
+        "imagemin-mozjpeg": "^10.0.0",
+        "imagemin-pngquant": "^9.0.2",
+        "imagemin-webp": "^8.0.0"
+    },
+    "engines": {
+        "node": ">=14.0.0",
+        "npm": ">=6.0.0"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead",
+        "not ie 11"
+    ],
+    "dependencies": {},
+    "optionalDependencies": {
+        "sharp": "^0.32.6"
+    },
+    "config": {
+        "port": 8000,
+        "host": "localhost"
+    },
+    "files": [
+        "index.html",
+        "styles.css",
+        "script.js",
+        "README.md",
+        "assets/"
+    ],
+    "publishConfig": {
+        "access": "public"
+    }
+}
