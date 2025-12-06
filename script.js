@@ -554,6 +554,10 @@ function initNotificationSystem() {
         notification.className = `notification ${type}`;
         notification.setAttribute('aria-hidden', 'false');
         notification.classList.add('show');
+        notificationClose.removeAttribute('tabindex');
+
+        notification.setAttribute('aria-hidden','true');
+        notificationClose.setAttribute('tabindex','-1');
         
         setTimeout(() => {
             hideNotification();
