@@ -295,6 +295,16 @@ function initPortfolioModals() {
             duration: '8 days',
             budget: '₹9,500',
             results: '150+ qualified leads'
+        },
+        fitness: {
+            title: 'Fitness Management Website',
+            description: 'A modern and responsive Fitness Management Application built to streamline workouts, diet tracking, membership management, and progress monitoring. The goal of this project was to design a clean, intuitive UI that makes it easy for users to follow fitness plans while giving admins full control over members, trainers, and schedules.',
+            technologies: ['Html', 'Css', 'JavaScript', 'java', 'Springboot', 'MySQL'],
+            features: ['User Registration & Login', 'Membership System', 'Trainer Management', 'Progress Tracker (weight, BMI, workouts)', 'Progress tracking', 'SEO Optimized'],
+            image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w==800&q=80',
+            duration: '10 days',
+            budget: '₹15,000',
+            results: '40% increase in user engagement'
         }
     };
     // Open modal function
