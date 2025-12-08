@@ -336,9 +336,10 @@ function initPortfolioModals() {
                 
                 <div style="margin-bottom: 1.5rem;">
                     <h3 style="color: #FFD700; margin-bottom: 0.5rem;">Technologies Used</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-
-                    </div>
+                    <strong style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                     ${project.technologies.map(tech => `
+                    <span style="
+                    background: #FFC700; color: #000; padding: 8px 16px; border-radius: 25px; font-weight: 600; font-size: 14px; display: inline-block;"> ${tech} </span>`).join('')}
                 </div>
                 
                 <div>
