@@ -5,7 +5,7 @@ const GOOGLE_SHEETS_CONFIG = {
 };
 
 // DOM Content Loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initLoadingAnimation();
     initNavigation();
     initScrollAnimations();
@@ -38,7 +38,7 @@ function initThemeToggle() {
         icon.classList.add('fa-moon');
     }
 
-    themeToggle.addEventListener('click', function() {
+    themeToggle.addEventListener('click', function () {
         body.classList.toggle('light-mode');
         if (body.classList.contains('light-mode')) {
             icon.classList.remove('fa-sun');
@@ -56,7 +56,7 @@ function initThemeToggle() {
 function initLoadingAnimation() {
     const loading = document.getElementById('loading');
     if (loading) {
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             setTimeout(() => {
                 loading.classList.add('hidden');
                 setTimeout(() => {
@@ -87,7 +87,7 @@ function initNavigation() {
     if (!hamburger || !navMenu) return;
 
     // Mobile menu toggle
-    hamburger.addEventListener('click', function() {
+    hamburger.addEventListener('click', function () {
         const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
         hamburger.setAttribute('aria-expanded', !isExpanded);
         hamburger.classList.toggle('active');
@@ -97,7 +97,7 @@ function initNavigation() {
 
     // Close mobile menu when clicking on a link
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             hamburger.classList.remove('active');
             hamburger.setAttribute('aria-expanded', 'false');
             navMenu.classList.remove('active');
@@ -107,7 +107,7 @@ function initNavigation() {
 
     // Navbar background on scroll
     let lastScrollTop = 0;
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
         if (scrollTop > 100) {
@@ -126,7 +126,7 @@ function initNavigation() {
     });
 
     // Close mobile menu on escape key
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && navMenu.classList.contains('active')) {
             hamburger.click();
         }
@@ -140,7 +140,7 @@ function initScrollAnimations() {
         rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver(function(entries) {
+    const observer = new IntersectionObserver(function (entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate');
@@ -256,15 +256,16 @@ function initPortfolioModals() {
             budget: '₹12,000',
             results: '40% increase in online orders'
         },
-        coaching: {
-            title: 'Online Coaching Institute Platform',
-            description: 'A comprehensive learning management system with student portal, course management, and payment integration. Built to handle hundreds of students with real-time progress tracking.',
-            technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Socket.io'],
-            features: ['Student dashboard', 'Course management', 'Payment integration', 'Video streaming', 'Progress tracking', 'Live classes'],
-            image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
-            duration: '21 days',
-            budget: '₹35,000',
-            results: '200+ students enrolled'
+        fitness: {
+            title: 'Fitness Management Website',
+            description: 'A modern and responsive Fitness Management Application built to streamline workouts, diet tracking, membership management, and progress monitoring. The goal of this project was to design a clean, intuitive UI that makes it easy for users to follow fitness plans while giving admins full control over members, trainers, and schedules.',
+            technologies: ['Html', 'Css', 'JavaScript', 'java', 'Springboot', 'MySQL'],
+            features: ['User Registration & Login', 'Membership System', 'Trainer Management', 'Progress Tracker (weight, BMI, workouts)', 'Progress tracking', 'SEO Optimized'],
+            image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w==800&q=80',
+            duration: '10 days',
+            budget: '₹15,000',
+            results: '40% increase in user engagement'
+
         },
         mobile: {
             title: 'Mobile App Landing Page',
@@ -295,24 +296,14 @@ function initPortfolioModals() {
             duration: '8 days',
             budget: '₹9,500',
             results: '150+ qualified leads'
-        },
-        fitness: {
-            title: 'Fitness Management Website',
-            description: 'A modern and responsive Fitness Management Application built to streamline workouts, diet tracking, membership management, and progress monitoring. The goal of this project was to design a clean, intuitive UI that makes it easy for users to follow fitness plans while giving admins full control over members, trainers, and schedules.',
-            technologies: ['Html', 'Css', 'JavaScript', 'java', 'Springboot', 'MySQL'],
-            features: ['User Registration & Login', 'Membership System', 'Trainer Management', 'Progress Tracker (weight, BMI, workouts)', 'Progress tracking', 'SEO Optimized'],
-            image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w==800&q=80',
-            duration: '10 days',
-            budget: '₹15,000',
-            results: '40% increase in user engagement'
         }
     };
     // Open modal function
-    window.openProject = function(projectId) {
-            const project = projects[projectId];
-            if (!project) return;
+    window.openProject = function (projectId) {
+        const project = projects[projectId];
+        if (!project) return;
 
-            modalContent.innerHTML = `
+        modalContent.innerHTML = `
             <div class="project-details">
                 <h2 style="color: #FFD700; margin-bottom: 1rem; font-size: 1.8rem;">${project.title}</h2>
                 
@@ -337,7 +328,7 @@ function initPortfolioModals() {
                 <div style="margin-bottom: 1.5rem;">
                     <h3 style="color: #FFD700; margin-bottom: 0.5rem;">Technologies Used</h3>
                     <strong style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                     ${project.technologies.map(tech => `
+                    ${project.technologies.map(tech => `
                     <span style="
                     background: #FFC700; color: #000; padding: 8px 16px; border-radius: 25px; font-weight: 600; font-size: 14px; display: inline-block;"> ${tech} </span>`).join('')}
                 </div>
@@ -356,7 +347,7 @@ function initPortfolioModals() {
         modal.style.display = 'block';
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
-        
+
         // Focus management
         closeBtn.focus();
     };
@@ -366,21 +357,21 @@ function initPortfolioModals() {
         modal.style.display = 'none';
         modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = 'auto';
-        
+
         if (document.activeElement && document.activeElement.classList.contains('portfolio-item')) {
             document.activeElement.focus();
         }
     }
 
     closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function(e) {
+    modal.addEventListener('click', function (e) {
         if (e.target === modal) {
             closeModal();
         }
     });
 
     // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && modal.style.display === 'block') {
             closeModal();
         }
@@ -392,6 +383,9 @@ function initFormHandling() {
     const form = document.getElementById('quoteForm');
     if (!form) return;
 
+    // Remove any existing event listener to prevent duplicates
+    form.removeEventListener('submit', submitForm);
+
     // Real-time validation
     const inputs = form.querySelectorAll('input, select, textarea');
     inputs.forEach(input => {
@@ -399,13 +393,15 @@ function initFormHandling() {
         input.addEventListener('input', clearFieldError);
     });
 
-    form.addEventListener('submit', submitForm);
+//     // Add submit event listener
+//     form.addEventListener('submit', submitForm);
+
 }
 
 function validateField(e) {
     const field = e.target;
     const errorElement = document.getElementById(`${field.id}-error`);
-    
+
     if (!errorElement) return;
 
     let isValid = true;
@@ -443,7 +439,7 @@ function validateField(e) {
 function clearFieldError(e) {
     const field = e.target;
     const errorElement = document.getElementById(`${field.id}-error`);
-    
+
     if (errorElement) {
         field.classList.remove('error');
         errorElement.textContent = '';
@@ -452,15 +448,15 @@ function clearFieldError(e) {
 
 function submitForm(e) {
     e.preventDefault();
-    
+
     const form = e.target;
     const formData = new FormData(form);
     const submitBtn = form.querySelector('button[type="submit"]');
-    
+
     // Validate all fields
     const inputs = form.querySelectorAll('input, select, textarea');
     let isValid = true;
-    
+
     inputs.forEach(input => {
         if (!validateField({ target: input })) {
             isValid = false;
@@ -494,18 +490,18 @@ function submitForm(e) {
             if (response.success) {
                 form.reset();
                 showNotification(response.message || 'Thank you! Your quote request has been sent. We\'ll get back to you within 2 hours.', 'success');
-                
+
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'form_submit', {
                         'event_category': 'engagement',
                         'event_label': 'quote_request_success'
                     });
                 }
-                
+
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
                 showNotification(response.message || 'There was an error submitting your form. Please try again.', 'error');
-                
+
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'form_submit_error', {
                         'event_category': 'engagement',
@@ -517,7 +513,7 @@ function submitForm(e) {
         .catch(error => {
             console.error('Form submission error:', error);
             showNotification('Unable to submit your form at this time. Please try again later or contact us directly.', 'error');
-            
+
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'form_submit_fatal_error', {
                     'event_category': 'engagement',
@@ -542,9 +538,9 @@ async function submitToGoogleSheets(data) {
             body: JSON.stringify(data)
         });
 
-        return { 
-            success: true, 
-            message: 'Thank you! Your quote request has been sent. We\'ll get back to you within 2 hours.' 
+        return {
+            success: true,
+            message: 'Thank you! Your quote request has been sent. We\'ll get back to you within 2 hours.'
         };
     } catch (error) {
         console.error('Google Sheets submission failed:', error);
@@ -560,20 +556,20 @@ function initNotificationSystem() {
 
     if (!notification || !notificationMessage) return;
 
-    window.showNotification = function(message, type = 'info') {
+    window.showNotification = function (message, type = 'info') {
         notificationMessage.textContent = message;
         notification.className = `notification ${type}`;
         notification.setAttribute('aria-hidden', 'false');
         notification.classList.add('show');
         notificationClose.removeAttribute('tabindex');
 
-        notification.setAttribute('aria-hidden','true');
-        notificationClose.setAttribute('tabindex','-1');
-        
+        notification.setAttribute('aria-hidden', 'true');
+        notificationClose.setAttribute('tabindex', '-1');
+
         setTimeout(() => {
             hideNotification();
         }, 5000);
-        
+
         announceToScreenReader(message);
     };
 
@@ -589,7 +585,7 @@ function initNotificationSystem() {
 
 // Copy to Clipboard
 function initCopyToClipboard() {
-    window.copyToClipboard = function(text) {
+    window.copyToClipboard = function (text) {
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(text).then(() => {
                 showNotification('Copied to clipboard!', 'success');
@@ -610,14 +606,14 @@ function initCopyToClipboard() {
         document.body.appendChild(textArea);
         textArea.focus();
         textArea.select();
-        
+
         try {
             document.execCommand('copy');
             showNotification('Copied to clipboard!', 'success');
         } catch (err) {
             showNotification('Failed to copy to clipboard', 'error');
         }
-        
+
         document.body.removeChild(textArea);
     }
 }
@@ -625,22 +621,22 @@ function initCopyToClipboard() {
 // Smooth Scrolling
 function initSmoothScrolling() {
     const links = document.querySelectorAll('a[href^="#"]');
-    
+
     links.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
-            
+
             if (targetElement) {
                 const offsetTop = targetElement.offsetTop - 80;
-                
+
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
                 });
-                
+
                 history.pushState(null, null, targetId);
             }
         });
@@ -652,10 +648,10 @@ function initParallax() {
     const hero = document.querySelector('.hero');
     if (!hero) return;
 
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         const scrolled = window.pageYOffset;
         const rate = scrolled * -0.5;
-        
+
         if (hero) {
             hero.style.transform = `translateY(${rate}px)`;
         }
@@ -753,9 +749,9 @@ function initAnalytics() {
 // WhatsApp Integration
 function initWhatsAppIntegration() {
     const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
-    
+
     whatsappLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'click', {
                     'event_category': 'engagement',
@@ -831,7 +827,7 @@ function announceToScreenReader(message) {
         liveRegion.style.overflow = 'hidden';
         document.body.appendChild(liveRegion);
     }
-    
+
     liveRegion.textContent = message;
     setTimeout(() => {
         liveRegion.textContent = '';
@@ -852,11 +848,11 @@ if ('serviceWorker' in navigator) {
 }
 
 // Error Handling
-window.addEventListener('error', function(e) {
+window.addEventListener('error', function (e) {
     console.error('JavaScript error:', e.error);
 });
 
-window.addEventListener('unhandledrejection', function(e) {
+window.addEventListener('unhandledrejection', function (e) {
     console.error('Unhandled promise rejection:', e.reason);
 });
 
@@ -867,7 +863,7 @@ if ('performance' in window) {
             const perfData = performance.getEntriesByType('navigation')[0];
             if (perfData) {
                 console.log('Page load time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
-                
+
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'timing_complete', {
                         'name': 'load',
