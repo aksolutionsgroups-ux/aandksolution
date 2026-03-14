@@ -1,876 +1,484 @@
-// Configuration for Google Sheets integration
-const GOOGLE_SHEETS_CONFIG = {
-    WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbytKCYjeuBObo-oqRcsRcFeuJppn3tUzyjfccDCck7N6OSQVtL6NdGmwPOLLgLU6bV2Bw/exec',
-    FALLBACK_EMAIL: 'aksolutionsgroups@gmail.com'
+/**
+ * A&K Solutions — script.js
+ *
+ * Sections:
+ *  1.  Configuration
+ *  2.  DOMContentLoaded — init calls
+ *  3.  Theme Toggle (dark / light mode)
+ *  4.  Loading Screen
+ *  5.  Navigation (hamburger, scroll hide/show)
+ *  6.  Scroll Animations (IntersectionObserver)
+ *  7.  Testimonial Slider
+ *  8.  Contact Form (validation + Google Sheets submit)
+ *  9.  Notification Toast
+ *  10. Smooth Scrolling
+ *  11. WhatsApp Button reveal
+ *  12. Analytics helpers
+ *  13. Utility functions
+ */
+
+
+/* ============================================================
+   1. CONFIGURATION
+============================================================ */
+const CONFIG = {
+  googleSheetsURL: 'https://script.google.com/macros/s/AKfycbytKCYjeuBObo-oqRcsRcFeuJppn3tUzyjfccDCck7N6OSQVtL6NdGmwPOLLgLU6bV2Bw/exec',
+  fallbackEmail:   'aksolutionsgroups@gmail.com',
 };
 
-// DOM Content Loaded
-document.addEventListener('DOMContentLoaded', function () {
-    initLoadingAnimation();
-    initNavigation();
-    initScrollAnimations();
-    initTestimonialSlider();
-    initPortfolioModals();
-    initFormHandling();
-    initSmoothScrolling();
-    initParallax();
-    initTypingAnimation();
-    initAnalytics();
-    initWhatsAppIntegration();
-    enhanceSEO();
-    initCopyToClipboard();
-    initNotificationSystem();
-    initPerformanceOptimizations();
-    initThemeToggle();
-    initWhatsAppButton();
+
+/* ============================================================
+   2. DOM CONTENT LOADED — INIT CALLS
+============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
+  initLoadingScreen();
+  initNavigation();
+  initScrollAnimations();
+  initTestimonialSlider();
+  initContactForm();
+  initNotificationSystem();
+  initSmoothScrolling();
+  initWhatsAppButton();
+  initAnalytics();
 });
 
-// Theme Toggle
+
+/* ============================================================
+   3. THEME TOGGLE
+   Persists choice in localStorage.
+   Falls back to time-of-day (IST) when no saved preference.
+============================================================ */
 function initThemeToggle() {
-    const themeToggle = document.getElementById('theme-toggle');
-    const icon = themeToggle.querySelector('i');
-    const body = document.body;
+  const toggle = document.getElementById('theme-toggle');
+  if (!toggle) return;
 
-    // Load theme from localStorage
-    if (localStorage.getItem('theme') === 'light') {
-        body.classList.add('light-mode');
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
+  const icon = toggle.querySelector('i');
+
+  // Apply saved theme or auto-detect based on IST time
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    applyLightMode(icon);
+  } else if (!savedTheme) {
+    autoThemeByTime(icon);
+  }
+
+  toggle.addEventListener('click', () => {
+    const isLight = document.body.classList.contains('light-mode');
+    if (isLight) {
+      applyDarkMode(icon);
+      localStorage.setItem('theme', 'dark');
+    } else {
+      applyLightMode(icon);
+      localStorage.setItem('theme', 'light');
     }
-
-    themeToggle.addEventListener('click', function () {
-        body.classList.toggle('light-mode');
-        if (body.classList.contains('light-mode')) {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-            localStorage.setItem('theme', 'light');
-        } else {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-            localStorage.setItem('theme', 'dark');
-        }
-    });
+  });
 }
 
-// Loading Animation
-function initLoadingAnimation() {
-    const loading = document.getElementById('loading');
-    if (loading) {
-        window.addEventListener('load', function () {
-            setTimeout(() => {
-                loading.classList.add('hidden');
-                setTimeout(() => {
-                    loading.style.display = 'none';
-                }, 500);
-            }, 1000);
-        });
-
-        // Fallback: hide loading if it takes too long
-        setTimeout(() => {
-            if (!loading.classList.contains('hidden')) {
-                loading.classList.add('hidden');
-                setTimeout(() => {
-                    loading.style.display = 'none';
-                }, 500);
-            }
-        }, 3000);
-    }
+function applyLightMode(iconEl) {
+  document.body.classList.add('light-mode');
+  iconEl.classList.replace('fa-sun', 'fa-moon');
 }
 
-// Navigation Functionality
+function applyDarkMode(iconEl) {
+  document.body.classList.remove('light-mode');
+  iconEl.classList.replace('fa-moon', 'fa-sun');
+}
+
+/** Set theme based on Indian Standard Time (UTC+5:30).
+ *  Light mode: 06:00–18:00 IST, dark mode otherwise. */
+function autoThemeByTime(iconEl) {
+  const istOffset = 5.5 * 60 * 60 * 1000; // ms
+  const istHour   = new Date(Date.now() + istOffset).getUTCHours();
+
+  if (istHour >= 6 && istHour < 18) {
+    applyLightMode(iconEl);
+  }
+}
+
+
+/* ============================================================
+   4. LOADING SCREEN
+   Hides the loading overlay after page load (max 3 s fallback).
+============================================================ */
+function initLoadingScreen() {
+  const loading = document.getElementById('loading');
+  if (!loading) return;
+
+  const hideLoading = () => {
+    loading.classList.add('hidden');
+    setTimeout(() => { loading.style.display = 'none'; }, 500);
+  };
+
+  window.addEventListener('load', () => setTimeout(hideLoading, 800));
+  setTimeout(hideLoading, 3000); // fallback
+}
+
+
+/* ============================================================
+   5. NAVIGATION
+   - Hamburger menu toggle for mobile
+   - Navbar shadow + hide-on-scroll-down behaviour
+============================================================ */
 function initNavigation() {
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const navbar = document.querySelector('.navbar');
+  const hamburger = document.querySelector('.hamburger');
+  const navMenu   = document.querySelector('.nav-menu');
+  const navbar    = document.querySelector('.navbar');
 
-    if (!hamburger || !navMenu) return;
+  if (!hamburger || !navMenu) return;
 
-    // Mobile menu toggle
-    hamburger.addEventListener('click', function () {
-        const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
-        hamburger.setAttribute('aria-expanded', !isExpanded);
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-    });
+  // Toggle mobile menu
+  hamburger.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', !expanded);
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+  });
 
-    // Close mobile menu when clicking on a link
-    navLinks.forEach(link => {
-        link.addEventListener('click', function () {
-            hamburger.classList.remove('active');
-            hamburger.setAttribute('aria-expanded', 'false');
-            navMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    });
+  // Close menu when a nav link is clicked
+  navMenu.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
 
-    // Navbar background on scroll
-    let lastScrollTop = 0;
-    window.addEventListener('scroll', function () {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  // Close menu on Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && navMenu.classList.contains('active')) closeMobileMenu();
+  });
 
-        if (scrollTop > 100) {
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
-        } else {
-            navbar.style.boxShadow = 'none';
-        }
+  // Scroll behaviour: shadow + hide-on-scroll-down
+  let lastScrollY = 0;
+  window.addEventListener('scroll', debounce(() => {
+    const y = window.scrollY;
 
-        // Hide/show navbar on scroll
-        if (scrollTop > lastScrollTop && scrollTop > 200) {
-            navbar.style.transform = 'translateY(-100%)';
-        } else {
-            navbar.style.transform = 'translateY(0)';
-        }
-        lastScrollTop = scrollTop;
-    });
+    navbar.style.boxShadow = y > 80 ? '0 2px 20px rgba(0,0,0,0.3)' : 'none';
+    navbar.style.transform = (y > lastScrollY && y > 200) ? 'translateY(-100%)' : 'translateY(0)';
+    lastScrollY = y;
+  }, 50));
 
-    // Close mobile menu on escape key
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-            hamburger.click();
-        }
-    });
+  function closeMobileMenu() {
+    hamburger.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+    navMenu.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 }
 
-// Scroll Animations with Intersection Observer
+
+/* ============================================================
+   6. SCROLL ANIMATIONS
+   Uses IntersectionObserver to fade cards in as they enter viewport.
+============================================================ */
 function initScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+  const targets = document.querySelectorAll('.benefit-card, .service-card, .pricing-card, .portfolio-item');
 
-    const observer = new IntersectionObserver(function (entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-                if (entry.target.parentElement && entry.target.parentElement.classList.contains('benefits-grid')) {
-                    const delay = Array.from(entry.target.parentElement.children).indexOf(entry.target) * 0.1;
-                    entry.target.style.animationDelay = `${delay}s`;
-                }
-            }
-        });
-    }, observerOptions);
-
-    // Observe elements for animation
-    const animateElements = document.querySelectorAll('.benefit-card, .service-card, .pricing-card, .portfolio-item');
-    animateElements.forEach(el => {
-        el.classList.add('scroll-animate');
-        observer.observe(el);
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate');
+        observer.unobserve(entry.target);
+      }
     });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    // Hero section animation
-    const heroContent = document.querySelector('.hero-content');
-    const heroVisual = document.querySelector('.hero-visual');
-
-    if (heroContent) {
-        heroContent.classList.add('fade-in-up');
-    }
-    if (heroVisual) {
-        setTimeout(() => {
-            heroVisual.classList.add('fade-in');
-        }, 300);
-    }
+  targets.forEach(el => {
+    el.classList.add('scroll-animate');
+    observer.observe(el);
+  });
 }
 
-// Testimonial Slider
+
+/* ============================================================
+   7. TESTIMONIAL SLIDER
+   Auto-advances every 5 s. Dot buttons allow manual navigation.
+   Exposed as window.currentSlide(index) for inline onclick handlers.
+============================================================ */
 function initTestimonialSlider() {
-    let currentSlide = 0;
-    const testimonials = document.querySelectorAll('.testimonial');
-    const dots = document.querySelectorAll('.dot');
-    let autoSlideInterval;
+  const testimonials = document.querySelectorAll('.testimonial');
+  const dots         = document.querySelectorAll('.testimonial-dots .dot');
 
-    if (testimonials.length === 0) return;
+  if (testimonials.length === 0) return;
 
-    function showSlide(n) {
-        testimonials.forEach(testimonial => testimonial.classList.remove('active'));
-        dots.forEach(dot => {
-            dot.classList.remove('active');
-            dot.setAttribute('aria-selected', 'false');
-        });
+  let current  = 0;
+  let interval = null;
 
-        currentSlide = (n + testimonials.length) % testimonials.length;
+  /** Show the testimonial at the given index. */
+  function showSlide(index) {
+    current = (index + testimonials.length) % testimonials.length;
 
-        testimonials[currentSlide].classList.add('active');
-        dots[currentSlide].classList.add('active');
-        dots[currentSlide].setAttribute('aria-selected', 'true');
-    }
-
-    function startAutoSlide() {
-        autoSlideInterval = setInterval(() => {
-            showSlide(currentSlide + 1);
-        }, 5000);
-    }
-
-    function stopAutoSlide() {
-        if (autoSlideInterval) {
-            clearInterval(autoSlideInterval);
-        }
-    }
-
-    // Dot navigation
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            showSlide(index);
-            stopAutoSlide();
-            startAutoSlide();
-        });
-
-        dot.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                showSlide(index);
-                stopAutoSlide();
-                startAutoSlide();
-            }
-        });
+    testimonials.forEach((t, i) => t.classList.toggle('active', i === current));
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+      d.setAttribute('aria-selected', i === current);
     });
+  }
 
-    // Pause auto-slide on hover
-    const testimonialSlider = document.querySelector('.testimonial-slider');
-    if (testimonialSlider) {
-        testimonialSlider.addEventListener('mouseenter', stopAutoSlide);
-        testimonialSlider.addEventListener('mouseleave', startAutoSlide);
-    }
+  function startAuto() {
+    interval = setInterval(() => showSlide(current + 1), 5000);
+  }
 
-    startAutoSlide();
-    window.currentSlide = showSlide;
+  function stopAuto() {
+    clearInterval(interval);
+  }
+
+  // Dot click handlers
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => { showSlide(i); stopAuto(); startAuto(); });
+  });
+
+  // Pause on hover
+  const slider = document.querySelector('.testimonial-slider');
+  if (slider) {
+    slider.addEventListener('mouseenter', stopAuto);
+    slider.addEventListener('mouseleave', startAuto);
+  }
+
+  startAuto();
+
+  // Expose for inline onclick in HTML
+  window.currentSlide = showSlide;
 }
 
-// Portfolio Modals
-function initPortfolioModals() {
-    const modal = document.getElementById('projectModal');
-    const modalContent = document.getElementById('modalContent');
-    const closeBtn = document.querySelector('.close');
 
-    if (!modal || !modalContent) return;
-    // Project data with enhanced information
-    const projects = {
-        cafe: {
-            title: 'Modern Café Website',
-            description: 'A beautiful, responsive website for a local café featuring online ordering, menu display, and reservation system. The project focused on creating an elegant user experience that reflects the café\'s warm atmosphere.',
-            technologies: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Node.js'],
-            features: ['Online ordering system', 'Menu management', 'Reservation booking', 'Mobile responsive', 'SEO optimized', 'Payment integration'],
-            image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
-            duration: '10 days',
-            budget: '₹12,000',
-            results: '40% increase in online orders'
-        },
-        fitness: {
-            title: 'Fitness Management Website',
-            description: 'A modern and responsive Fitness Management Application built to streamline workouts, diet tracking, membership management, and progress monitoring. The goal of this project was to design a clean, intuitive UI that makes it easy for users to follow fitness plans while giving admins full control over members, trainers, and schedules.',
-            technologies: ['Html', 'Css', 'JavaScript', 'java', 'Springboot', 'MySQL'],
-            features: ['User Registration & Login', 'Membership System', 'Trainer Management', 'Progress Tracker (weight, BMI, workouts)', 'Progress tracking', 'SEO Optimized'],
-            image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w==800&q=80',
-            duration: '10 days',
-            budget: '₹15,000',
-            results: '40% increase in user engagement'
+/* ============================================================
+   8. CONTACT FORM
+   - Real-time field validation on blur / input
+   - Submits data to Google Sheets via fetch (no-cors)
+============================================================ */
+function initContactForm() {
+  const form = document.getElementById('quoteForm');
+  if (!form) return;
 
-        },
-        mobile: {
-            title: 'Mobile App Landing Page',
-            description: 'High-converting landing page designed to showcase mobile app features and drive downloads. Optimized for conversion with A/B testing and analytics integration.',
-            technologies: ['HTML5', 'CSS3', 'JavaScript', 'GSAP', 'Google Analytics'],
-            features: ['Animated sections', 'App store integration', 'Feature showcase', 'Testimonials', 'Download tracking', 'A/B testing'],
-            image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
-            duration: '7 days',
-            budget: '₹8,500',
-            results: '300% increase in downloads'
-        },
-        artisan: {
-            title: 'Local Artisan E-commerce Store',
-            description: 'Beautiful online store showcasing handmade products with secure payment processing and inventory management. Designed to highlight the unique craftsmanship of local artisans.',
-            technologies: ['React', 'Node.js', 'Stripe', 'MongoDB', 'Cloudinary'],
-            features: ['Product catalog', 'Shopping cart', 'Payment processing', 'Inventory management', 'Order tracking', 'Artisan profiles'],
-            image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
-            duration: '14 days',
-            budget: '₹22,000',
-            results: '₹2.5L+ in sales'
-        },
-        service: {
-            title: 'Service Business Lead Generation',
-            description: 'Lead generation website optimized for converting visitors into qualified leads for service-based businesses. Includes advanced form handling and CRM integration.',
-            technologies: ['HTML5', 'CSS3', 'JavaScript', 'PHP', 'MySQL'],
-            features: ['Lead capture forms', 'Service showcase', 'Testimonials', 'Contact integration', 'Analytics tracking', 'CRM integration'],
-            image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
-            duration: '8 days',
-            budget: '₹9,500',
-            results: '150+ qualified leads'
-        }
-    };
-    // Open modal function
-    window.openProject = function (projectId) {
-        const project = projects[projectId];
-        if (!project) return;
+  // Real-time validation
+  form.querySelectorAll('input, select, textarea').forEach(field => {
+    field.addEventListener('blur',  () => validateField(field));
+    field.addEventListener('input', () => clearFieldError(field));
+  });
+}
 
-        modalContent.innerHTML = `
-            <div class="project-details">
-                <h2 style="color: #FFD700; margin-bottom: 1rem; font-size: 1.8rem;">${project.title}</h2>
-                
-                <div class="project-image" style="margin-bottom: 1.5rem;">
-                    <img src="${project.image}" alt="${project.title}" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
-                </div>
-                
-                <div class="project-info" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-                    <div style="background: rgba(255,215,0,0.1); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFD700;">
-                        <strong style="color: #FFD700;">Duration:</strong><br>${project.duration}
-                    </div>
-                    <div style="background: rgba(255,215,0,0.1); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFD700;">
-                        <strong style="color: #FFD700;">Budget:</strong><br>${project.budget}
-                    </div>
-                    <div style="background: rgba(255,215,0,0.1); padding: 1rem; border-radius: 8px; border-left: 3px solid #FFD700;">
-                        <strong style="color: #FFD700;">Results:</strong><br>${project.results}
-                    </div>
-                </div>
-                
-                <p style="margin-bottom: 1.5rem; line-height: 1.6; color: #00000;">${project.description}</p>
-                
-                <div style="margin-bottom: 1.5rem;">
-                    <h3 style="color: #FFD700; margin-bottom: 0.5rem;">Technologies Used</h3>
-                    <strong style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                    ${project.technologies.map(tech => `
-                    <span style="
-                    background: #FFC700; color: #000; padding: 8px 16px; border-radius: 25px; font-weight: 600; font-size: 14px; display: inline-block;"> ${tech} </span>`).join('')}
-                </div>
-                
-                <div>
-                    <h3 style="color: #FFD700; margin-bottom: 0.5rem;">Key Features</h3>
-                    <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.5rem;">
-                        ${project.features.map(feature => `<li style="margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative; color: #cccccc;">
-                            <span style="position: absolute; left: 0; color: #FFD700; font-weight: bold;">✓</span> ${feature}
-                        </li>`).join('')}
-                    </ul>
-                </div>
-            </div>
-        `;
+/** Validate a single form field. Returns true if valid. */
+function validateField(field) {
+  const errorEl = document.getElementById(`${field.id}-error`);
+  if (!errorEl) return true;
 
-        modal.style.display = 'block';
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
+  field.classList.remove('error');
+  errorEl.textContent = '';
 
-        // Focus management
-        closeBtn.focus();
-    };
+  // Required check
+  if (field.hasAttribute('required') && !field.value.trim()) {
+    showFieldError(field, errorEl, 'This field is required');
+    return false;
+  }
 
-    // Close modal
-    function closeModal() {
-        modal.style.display = 'none';
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = 'auto';
-
-        if (document.activeElement && document.activeElement.classList.contains('portfolio-item')) {
-            document.activeElement.focus();
-        }
+  // Email format
+  if (field.type === 'email' && field.value) {
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+    if (!valid) {
+      showFieldError(field, errorEl, 'Please enter a valid email address');
+      return false;
     }
+  }
 
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function (e) {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+  // Phone format
+  if (field.type === 'tel' && field.value) {
+    const valid = /^[\d\s+\-()]{10,}$/.test(field.value);
+    if (!valid) {
+      showFieldError(field, errorEl, 'Please enter a valid phone number');
+      return false;
+    }
+  }
 
-    // Close modal with Escape key
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modal.style.display === 'block') {
-            closeModal();
-        }
-    });
+  return true;
 }
 
-// Form Handling
-function initFormHandling() {
-    const form = document.getElementById('quoteForm');
-    if (!form) return;
-
-    // Remove any existing event listener to prevent duplicates
-    form.removeEventListener('submit', submitForm);
-
-    // Real-time validation
-    const inputs = form.querySelectorAll('input, select, textarea');
-    inputs.forEach(input => {
-        input.addEventListener('blur', validateField);
-        input.addEventListener('input', clearFieldError);
-    });
-
-//     // Add submit event listener
-//     form.addEventListener('submit', submitForm);
-
+function showFieldError(field, errorEl, message) {
+  field.classList.add('error');
+  errorEl.textContent = message;
 }
 
-function validateField(e) {
-    const field = e.target;
-    const errorElement = document.getElementById(`${field.id}-error`);
-
-    if (!errorElement) return;
-
-    let isValid = true;
-    let errorMessage = '';
-
+function clearFieldError(field) {
+  const errorEl = document.getElementById(`${field.id}-error`);
+  if (errorEl) {
     field.classList.remove('error');
-    errorElement.textContent = '';
-
-    if (field.hasAttribute('required') && !field.value.trim()) {
-        isValid = false;
-        errorMessage = 'This field is required';
-    } else if (field.type === 'email' && field.value) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(field.value)) {
-            isValid = false;
-            errorMessage = 'Please enter a valid email address';
-        }
-    } else if (field.type === 'tel' && field.value) {
-        const phoneRegex = /^[\d\s\+\-\(\)]{10,}$/;
-        if (!phoneRegex.test(field.value)) {
-            isValid = false;
-            errorMessage = 'Please enter a valid phone number';
-        }
-    }
-
-    if (!isValid) {
-        field.classList.add('error');
-        errorElement.textContent = errorMessage;
-        announceToScreenReader(errorMessage);
-    }
-
-    return isValid;
+    errorEl.textContent = '';
+  }
 }
 
-function clearFieldError(e) {
-    const field = e.target;
-    const errorElement = document.getElementById(`${field.id}-error`);
+/** Called by the form's onsubmit attribute. */
+window.submitForm = function (e) {
+  e.preventDefault();
 
-    if (errorElement) {
-        field.classList.remove('error');
-        errorElement.textContent = '';
-    }
-}
+  const form      = e.target;
+  const submitBtn = form.querySelector('button[type="submit"]');
 
-function submitForm(e) {
-    e.preventDefault();
+  // Validate all fields
+  let isValid = true;
+  form.querySelectorAll('input, select, textarea').forEach(field => {
+    if (!validateField(field)) isValid = false;
+  });
 
-    const form = e.target;
-    const formData = new FormData(form);
-    const submitBtn = form.querySelector('button[type="submit"]');
+  if (!isValid) {
+    showNotification('Please fix the errors in the form.', 'error');
+    return;
+  }
 
-    // Validate all fields
-    const inputs = form.querySelectorAll('input, select, textarea');
-    let isValid = true;
+  // Show loading state
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Sending…';
+  submitBtn.disabled    = true;
 
-    inputs.forEach(input => {
-        if (!validateField({ target: input })) {
-            isValid = false;
-        }
+  const data = {
+    name:         form.name.value,
+    email:        form.email.value,
+    whatsapp:     form.whatsapp.value || '',
+    businessType: form.businessType.value,
+    websiteType:  form.websiteType.value,
+    budget:       form.budget.value,
+    message:      form.message.value,
+  };
+
+  submitToGoogleSheets(data)
+    .then(() => {
+      form.reset();
+      showNotification("Thank you! We'll get back to you within 2 hours.", 'success');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      trackEvent('form_submit', 'engagement', 'quote_request_success');
+    })
+    .catch(() => {
+      showNotification('Something went wrong. Please email us directly or try again.', 'error');
+      trackEvent('form_submit_error', 'engagement', 'quote_request_failed');
+    })
+    .finally(() => {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled    = false;
     });
+};
 
-    if (!isValid) {
-        showNotification('Please fix the errors in the form', 'error');
-        return;
-    }
-
-    // Show loading state
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
-
-    // Prepare form data
-    const submissionData = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        whatsapp: formData.get('whatsapp') || '',
-        businessType: formData.get('businessType'),
-        websiteType: formData.get('websiteType'),
-        budget: formData.get('budget'),
-        message: formData.get('message')
-    };
-
-    // Submit to Google Sheets
-    submitToGoogleSheets(submissionData)
-        .then(response => {
-            if (response.success) {
-                form.reset();
-                showNotification(response.message || 'Thank you! Your quote request has been sent. We\'ll get back to you within 2 hours.', 'success');
-
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'form_submit', {
-                        'event_category': 'engagement',
-                        'event_label': 'quote_request_success'
-                    });
-                }
-
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                showNotification(response.message || 'There was an error submitting your form. Please try again.', 'error');
-
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'form_submit_error', {
-                        'event_category': 'engagement',
-                        'event_label': 'quote_request_failed'
-                    });
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Form submission error:', error);
-            showNotification('Unable to submit your form at this time. Please try again later or contact us directly.', 'error');
-
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'form_submit_fatal_error', {
-                    'event_category': 'engagement',
-                    'event_label': 'quote_request_fatal_failed'
-                });
-            }
-        })
-        .finally(() => {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        });
-}
-
+/** Send form data to Google Sheets (no-cors, fire-and-forget style). */
 async function submitToGoogleSheets(data) {
-    try {
-        await fetch(GOOGLE_SHEETS_CONFIG.WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'text/plain;charset=utf-8',
-            },
-            body: JSON.stringify(data)
-        });
-
-        return {
-            success: true,
-            message: 'Thank you! Your quote request has been sent. We\'ll get back to you within 2 hours.'
-        };
-    } catch (error) {
-        console.error('Google Sheets submission failed:', error);
-        throw error;
-    }
+  await fetch(CONFIG.googleSheetsURL, {
+    method:  'POST',
+    mode:    'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body:    JSON.stringify(data),
+  });
+  // no-cors means we can't read the response; assume success if no exception
 }
 
-// Notification System
+
+/* ============================================================
+   9. NOTIFICATION TOAST
+   showNotification(message, type) is exposed globally.
+   type: 'success' | 'error' | 'info'
+============================================================ */
 function initNotificationSystem() {
-    const notification = document.getElementById('notification');
-    const notificationMessage = document.getElementById('notification-message');
-    const notificationClose = document.querySelector('.notification-close');
+  const notification = document.getElementById('notification');
+  const messageEl    = document.getElementById('notification-message');
+  const closeBtn     = document.querySelector('.notification-close');
 
-    if (!notification || !notificationMessage) return;
+  if (!notification || !messageEl) return;
 
-    window.showNotification = function (message, type = 'info') {
-        notificationMessage.textContent = message;
-        notification.className = `notification ${type}`;
-        notification.setAttribute('aria-hidden', 'false');
-        notification.classList.add('show');
-        notificationClose.removeAttribute('tabindex');
+  let hideTimer = null;
 
-        notification.setAttribute('aria-hidden', 'true');
-        notificationClose.setAttribute('tabindex', '-1');
+  window.showNotification = function (message, type = 'info') {
+    clearTimeout(hideTimer);
+    messageEl.textContent = message;
+    notification.className = `notification ${type} show`;
+    notification.setAttribute('aria-hidden', 'false');
 
-        setTimeout(() => {
-            hideNotification();
-        }, 5000);
+    hideTimer = setTimeout(hideNotification, 5000);
+  };
 
-        announceToScreenReader(message);
-    };
+  function hideNotification() {
+    notification.classList.remove('show');
+    notification.setAttribute('aria-hidden', 'true');
+  }
 
-    function hideNotification() {
-        notification.classList.remove('show');
-        notification.setAttribute('aria-hidden', 'true');
-    }
-
-    if (notificationClose) {
-        notificationClose.addEventListener('click', hideNotification);
-    }
+  closeBtn?.addEventListener('click', hideNotification);
 }
 
-// Copy to Clipboard
-function initCopyToClipboard() {
-    window.copyToClipboard = function (text) {
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text).then(() => {
-                showNotification('Copied to clipboard!', 'success');
-            }).catch(() => {
-                fallbackCopyToClipboard(text);
-            });
-        } else {
-            fallbackCopyToClipboard(text);
-        }
-    };
 
-    function fallbackCopyToClipboard(text) {
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-999999px';
-        textArea.style.top = '-999999px';
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-
-        try {
-            document.execCommand('copy');
-            showNotification('Copied to clipboard!', 'success');
-        } catch (err) {
-            showNotification('Failed to copy to clipboard', 'error');
-        }
-
-        document.body.removeChild(textArea);
-    }
-}
-
-// Smooth Scrolling
+/* ============================================================
+   10. SMOOTH SCROLLING
+   Intercepts all anchor links that point to an #id and scrolls
+   smoothly with a 80 px offset to clear the fixed navbar.
+============================================================ */
 function initSmoothScrolling() {
-    const links = document.querySelectorAll('a[href^="#"]');
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
 
-    links.forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement) {
-                const offsetTop = targetElement.offsetTop - 80;
-
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
-
-                history.pushState(null, null, targetId);
-            }
-        });
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
     });
+  });
 }
 
-// Parallax Effect
-function initParallax() {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
 
-    window.addEventListener('scroll', function () {
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-
-        if (hero) {
-            hero.style.transform = `translateY(${rate}px)`;
-        }
-    });
-}
-
-// Typing Animation
-function initTypingAnimation() {
-    const codeLines = document.querySelectorAll('.code-line');
-    if (codeLines.length === 0) return;
-
-    const typeWriter = () => {
-        codeLines.forEach((line, index) => {
-            setTimeout(() => {
-                line.style.opacity = '1';
-                line.style.transform = 'translateX(0)';
-            }, index * 500);
-        });
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                typeWriter();
-                observer.unobserve(entry.target);
-            }
-        });
-    });
-
-    const heroVisual = document.querySelector('.hero-visual');
-    if (heroVisual) {
-        observer.observe(heroVisual);
-    }
-}
-
-// Performance Optimizations
-function initPerformanceOptimizations() {
-    // Lazy load images
-    const images = document.querySelectorAll('img[loading="lazy"]');
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src || img.src;
-                    img.classList.remove('lazy');
-                    imageObserver.unobserve(img);
-                }
-            });
-        });
-
-        images.forEach(img => imageObserver.observe(img));
-    }
-
-    // Preload critical resources
-    const criticalResources = [
-        'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap',
-        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
-    ];
-
-    criticalResources.forEach(resource => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.href = resource;
-        link.as = 'style';
-        document.head.appendChild(link);
-    });
-}
-
-// Analytics Integration
-function initAnalytics() {
-    if (typeof gtag !== 'undefined') {
-        gtag('config', 'GA_MEASUREMENT_ID', {
-            page_title: document.title,
-            page_location: window.location.href
-        });
-
-        // Track scroll depth
-        let maxScroll = 0;
-        window.addEventListener('scroll', debounce(() => {
-            const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
-            if (scrollPercent > maxScroll) {
-                maxScroll = scrollPercent;
-                if (maxScroll % 25 === 0) {
-                    gtag('event', 'scroll', {
-                        'event_category': 'engagement',
-                        'event_label': `${maxScroll}%`
-                    });
-                }
-            }
-        }, 1000));
-    }
-}
-
-// WhatsApp Integration
-function initWhatsAppIntegration() {
-    const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
-
-    whatsappLinks.forEach(link => {
-        link.addEventListener('click', function () {
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'click', {
-                    'event_category': 'engagement',
-                    'event_label': 'whatsapp_contact'
-                });
-            }
-        });
-    });
-}
-
-// SEO Enhancements
-function enhanceSEO() {
-    const structuredData = {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "AK Solutions",
-        "url": window.location.origin,
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": `${window.location.origin}/search?q={search_term_string}`,
-            "query-input": "required name=search_term_string"
-        }
-    };
-
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(structuredData);
-    document.head.appendChild(script);
-
-    if (!document.querySelector('meta[name="description"]')) {
-        const meta = document.createElement('meta');
-        meta.name = 'description';
-        meta.content = 'Professional web development services in India. Custom websites, React apps, e-commerce solutions. Fast delivery in 7-14 days.';
-        document.head.appendChild(meta);
-    }
-}
-
-// WhatsApp Button
+/* ============================================================
+   11. WHATSAPP BUTTON REVEAL
+   Fades in the floating button 1 s after page load.
+============================================================ */
 function initWhatsAppButton() {
-    const whatsappBtn = document.querySelector('.whatsapp-btn');
-    if (!whatsappBtn) return;
+  const btn = document.querySelector('.whatsapp-btn');
+  if (!btn) return;
 
-    setTimeout(() => {
-        whatsappBtn.style.opacity = '1';
-        whatsappBtn.style.transform = 'scale(1)';
-    }, 1000);
+  setTimeout(() => {
+    btn.style.opacity   = '1';
+    btn.style.transform = 'scale(1)';
+  }, 1000);
 }
 
-// Utility Functions
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
 
-function announceToScreenReader(message) {
-    let liveRegion = document.getElementById('sr-live-region');
-    if (!liveRegion) {
-        liveRegion = document.createElement('div');
-        liveRegion.id = 'sr-live-region';
-        liveRegion.setAttribute('aria-live', 'polite');
-        liveRegion.setAttribute('aria-atomic', 'true');
-        liveRegion.style.position = 'absolute';
-        liveRegion.style.left = '-10000px';
-        liveRegion.style.width = '1px';
-        liveRegion.style.height = '1px';
-        liveRegion.style.overflow = 'hidden';
-        document.body.appendChild(liveRegion);
+/* ============================================================
+   12. ANALYTICS HELPERS
+   Safe wrappers around gtag so the site works even if gtag
+   fails to load (e.g. ad blockers).
+============================================================ */
+function initAnalytics() {
+  if (typeof gtag === 'undefined') return;
+
+  // Track scroll depth at 25 % intervals
+  let maxScroll = 0;
+  window.addEventListener('scroll', debounce(() => {
+    const pct = Math.round(
+      (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
+    );
+    if (pct > maxScroll && pct % 25 === 0) {
+      maxScroll = pct;
+      trackEvent('scroll', 'engagement', `${pct}%`);
     }
+  }, 500));
 
-    liveRegion.textContent = message;
-    setTimeout(() => {
-        liveRegion.textContent = '';
-    }, 1000);
+  // Track WhatsApp button clicks
+  document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+    link.addEventListener('click', () => trackEvent('click', 'engagement', 'whatsapp_contact'));
+  });
 }
 
-// Service Worker Registration
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('SW registered: ', registration);
-            })
-            .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
+/** Safe gtag event wrapper. */
+function trackEvent(action, category, label) {
+  if (typeof gtag !== 'undefined') {
+    gtag('event', action, { event_category: category, event_label: label });
+  }
 }
 
-// Error Handling
-window.addEventListener('error', function (e) {
-    console.error('JavaScript error:', e.error);
-});
 
-window.addEventListener('unhandledrejection', function (e) {
-    console.error('Unhandled promise rejection:', e.reason);
-});
+/* ============================================================
+   13. UTILITY FUNCTIONS
+============================================================ */
 
-// Performance Monitoring
-if ('performance' in window) {
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            const perfData = performance.getEntriesByType('navigation')[0];
-            if (perfData) {
-                console.log('Page load time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
-
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'timing_complete', {
-                        'name': 'load',
-                        'value': Math.round(perfData.loadEventEnd - perfData.loadEventStart)
-                    });
-                }
-            }
-        }, 0);
-    });
+/** Debounce: delay execution until `wait` ms after last call. */
+function debounce(fn, wait) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), wait);
+  };
 }
+
+// Global error handler (logs, does not alert user)
+window.addEventListener('error', e => console.error('JS error:', e.error));
+window.addEventListener('unhandledrejection', e => console.error('Unhandled promise:', e.reason));
